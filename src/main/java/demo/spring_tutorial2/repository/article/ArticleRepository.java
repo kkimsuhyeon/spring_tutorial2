@@ -6,7 +6,17 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
+@NoRepositoryBean
 public interface ArticleRepository {
     public List<Article> findAll();
+
+    public long count();
+
+    public Article save(String title, String content, String hashTag);
+
+    public Optional<Article> findById(Long id);
+
+    public void delete(Article article);
 }
