@@ -33,7 +33,6 @@ public class ArticleComment extends AuditingFields {
     @Column(nullable = false, length = 5000)
     private String content;
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "article_id")
     private Article article;
@@ -45,6 +44,22 @@ public class ArticleComment extends AuditingFields {
 
     public static ArticleComment of(Article article, String content) {
         return new ArticleComment(article, content);
+    }
+
+    public void addArticle(Article article) {
+
+        this.article = article;
+        if (!article.getArticleComments().contains(this)) {
+            article.addArticleComment(this);
+        }
+    }
+
+    public void removeArticle(Article article) {
+        this.article = null;
+        if (article.getArticleComments().contains(this)) {
+            System.out.println("????");
+            article.removeArticleComment(this);
+        }
     }
 
     @Override

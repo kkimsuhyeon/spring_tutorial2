@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @EntityListeners(AuditingEntityListener.class) // createdAt, createdBy, modifiedAt, modifiedBy를 자동으로 채우기 위한 어노테이션
+// 생성하지 못하도록 추상클래스로 만드는걸 추천함
 public abstract class AuditingFields {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

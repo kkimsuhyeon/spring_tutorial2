@@ -1,6 +1,8 @@
 package demo.spring_tutorial2.repository.article;
 
 import demo.spring_tutorial2.domain.Article;
+import demo.spring_tutorial2.domain.ArticleComment;
+import demo.spring_tutorial2.repository.articleComment.ArticleCommentRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,6 +42,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
 
     @Override
     public void delete(Article article) {
+        article.getArticleComments().forEach((comment) -> comment.removeArticle(article));
         em.remove(article);
     }
 

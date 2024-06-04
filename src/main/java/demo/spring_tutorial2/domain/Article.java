@@ -57,8 +57,18 @@ public class Article extends AuditingFields {
     }
 
     public void addArticleComment(ArticleComment comment) {
+
         articleComments.add(comment);
-        comment.setArticle(this);
+        if (!comment.getArticle().equals(this)) {
+            comment.addArticle(this);
+        }
+    }
+
+    public void removeArticleComment(ArticleComment comment) {
+//        articleComments.remove(comment);
+        if (comment.getArticle() != null) {
+            comment.removeArticle(this);
+        }
     }
 
     @Override
