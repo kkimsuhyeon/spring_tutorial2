@@ -19,6 +19,7 @@ spring:
   sql:
     init:
       mode: always
+      data-locations: classpath:data2.sql
 logging:
   level:
     org.hibernate.sql: debug

@@ -34,7 +34,8 @@ public class ArticleComment extends AuditingFields {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "article_id")
+    @JoinColumn(name = "article_id", nullable = false)
+    // @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Article article;
 
     private ArticleComment(Article article, String content) {
@@ -47,18 +48,9 @@ public class ArticleComment extends AuditingFields {
     }
 
     public void addArticle(Article article) {
-
         this.article = article;
         if (!article.getArticleComments().contains(this)) {
             article.addArticleComment(this);
-        }
-    }
-
-    public void removeArticle(Article article) {
-        this.article = null;
-        if (article.getArticleComments().contains(this)) {
-            System.out.println("????");
-            article.removeArticleComment(this);
         }
     }
 
@@ -76,7 +68,6 @@ public class ArticleComment extends AuditingFields {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " + "content = " + content + ", ";
+        return getClass().getSimpleName() + "(" + "id = " + id + ", " + "content = " + content + " )";
     }
 }

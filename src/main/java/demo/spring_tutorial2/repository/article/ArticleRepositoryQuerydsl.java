@@ -1,9 +1,8 @@
 package demo.spring_tutorial2.repository.article;
 
-import com.querydsl.core.QueryFactory;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import demo.spring_tutorial2.domain.Article;
+import demo.spring_tutorial2.domain.ArticleStatus;
 import demo.spring_tutorial2.domain.QArticle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -51,11 +50,17 @@ public class ArticleRepositoryQuerydsl implements ArticleRepository {
         return Optional.ofNullable(article);
     }
 
+
     @Override
-    public void delete(Article article) {
+    public void deleteById(Long id) {
+        Article article = em.find(Article.class, id);
+        article.setStatus(ArticleStatus.DELETE);
+    }
 
-
-
+    @Override
+    public void realDeleteById(Long id) {
+        Article article = em.find(Article.class, id);
         em.remove(article);
     }
+
 }

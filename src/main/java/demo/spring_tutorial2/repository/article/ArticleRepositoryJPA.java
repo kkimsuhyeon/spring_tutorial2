@@ -2,9 +2,12 @@ package demo.spring_tutorial2.repository.article;
 
 import demo.spring_tutorial2.domain.Article;
 import demo.spring_tutorial2.domain.ArticleComment;
+import demo.spring_tutorial2.domain.ArticleStatus;
+import demo.spring_tutorial2.dto.RequestArticleUpdate;
 import demo.spring_tutorial2.repository.articleComment.ArticleCommentRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -36,13 +39,18 @@ public class ArticleRepositoryJPA implements ArticleRepository {
     @Override
     public Optional<Article> findById(Long id) {
         Article article = em.find(Article.class, id);
-
         return Optional.ofNullable(article);
     }
 
     @Override
-    public void delete(Article article) {
-        article.getArticleComments().forEach((comment) -> comment.removeArticle(article));
+    public void deleteById(Long id) {
+        Article article = em.find(Article.class, id);
+        article.setStatus(ArticleStatus.DELETE);
+    }
+
+    @Override
+    public void realDeleteById(Long id) {
+        Article article = em.find(Article.class, id);
         em.remove(article);
     }
 

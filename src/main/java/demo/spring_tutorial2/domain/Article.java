@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,6 +30,7 @@ public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     @Column(name = "article_id")
     private Long id;
 
@@ -42,6 +44,10 @@ public class Article extends AuditingFields {
 
     @Setter
     private String hashtag;
+
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private ArticleStatus status;
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
@@ -57,17 +63,9 @@ public class Article extends AuditingFields {
     }
 
     public void addArticleComment(ArticleComment comment) {
-
         articleComments.add(comment);
         if (!comment.getArticle().equals(this)) {
             comment.addArticle(this);
-        }
-    }
-
-    public void removeArticleComment(ArticleComment comment) {
-//        articleComments.remove(comment);
-        if (comment.getArticle() != null) {
-            comment.removeArticle(this);
         }
     }
 
