@@ -3,7 +3,7 @@ package demo.spring_tutorial2.repository.article;
 import demo.spring_tutorial2.config.JpaConfig;
 import demo.spring_tutorial2.domain.Article;
 import demo.spring_tutorial2.domain.ArticleStatus;
-import demo.spring_tutorial2.dto.RequestArticleUpdate;
+import demo.spring_tutorial2.dto.request.RequestArticleUpdate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @Import(JpaConfig.class)

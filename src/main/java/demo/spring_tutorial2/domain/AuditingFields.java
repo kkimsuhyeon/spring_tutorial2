@@ -14,13 +14,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-// 엔티티x, 테이블과 매핑x, 상속용으로 사용할 것을 의미
 @MappedSuperclass
 @Getter
 @ToString
 @EntityListeners(AuditingEntityListener.class) // createdAt, createdBy, modifiedAt, modifiedBy를 자동으로 채우기 위한 어노테이션
-// 생성하지 못하도록 추상클래스로 만드는걸 추천함
-public abstract class AuditingFields {
+public abstract class AuditingFields { // 생성하지 못하도록 추상클래스로 만드는걸 추천함
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate

@@ -1318,3 +1318,20 @@ values (49,
        (19, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', '2021-05-07 23:57:29',
         '2021-04-03 21:55:11', 'Oliver', 'Graehme')
 ;
+
+
+# insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at,
+#                           modified_by)
+# values ('uno', 'asdf1234', 'Uno', 'uno@mail.com', 'I am Uno.', now(), 'uno', now(), 'uno');
+
+
+# INSERT INTO article_comment (article_id, content, created_at, modified_at, created_by, modified_by)
+# VALUES (1, 'content1', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (1, 'content2', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (1, 'content3', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (2, 'content4', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (3, 'content5', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (2, 'content6', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (3, 'content7', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (4, 'content8', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv'),
+#        (4, 'content9', '2021-03-02 22:40:04', '2021-04-27 15:38:09', 'Lind', 'Orv');

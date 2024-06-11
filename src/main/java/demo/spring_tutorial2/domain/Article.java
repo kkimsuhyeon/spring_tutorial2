@@ -5,54 +5,36 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
         @Index(columnList = "createdAt"),
-        @Index(columnList = "createdBy")
+        @Index(columnList = "createdBy"),
 })
 public class Article extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
     @Column(name = "article_id")
     private Long id;
 
-    @Setter
     @Column(nullable = false)
     private String title;
 
-    @Setter
     @Column(nullable = false, length = 10000)
     private String content;
 
-    @Setter
     private String hashtag;
 
-    @Setter
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
-
-    private Article(String title, String content, String hashtag) {
+    public Article(String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
@@ -60,33 +42,5 @@ public class Article extends AuditingFields {
 
     public static Article of(String title, String content, String hashtag) {
         return new Article(title, content, hashtag);
-    }
-
-    public void addArticleComment(ArticleComment comment) {
-        articleComments.add(comment);
-        if (!comment.getArticle().equals(this)) {
-            comment.addArticle(this);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Article article)) return false;
-        return Objects.equals(id, article.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "title = " + title + ", " +
-                "content = " + content + ", " +
-                "hashtag = " + hashtag + ", " + "article_comment = " + articleComments.toString();
     }
 }
