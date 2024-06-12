@@ -33,6 +33,7 @@ public class ArticleController {
         Page<ArticleDto> articles = articleService.searchArticle(null, pageable);
         map.addAttribute("articles", articles);
 
+
         return "articles/index";
     }
 

@@ -1,15 +1,13 @@
 package demo.spring_tutorial2.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
+@ToString(of = {"title", "content"})
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),

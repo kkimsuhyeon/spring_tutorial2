@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class ArticleService {
@@ -24,5 +26,25 @@ public class ArticleService {
     public Page<ArticleDto> searchArticle(SearchValue searchValue, Pageable pageable) {
         Page<Article> result = articleRepository.findBySearchValue(searchValue, pageable);
         return result.map(ArticleDto::from);
+    }
+
+    public ArticleDto getArticle(Long id) {
+        Optional<Article> article = articleRepository.findById(id);
+
+        return article
+                .map(ArticleDto::from)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
+    }
+
+    public void save() {
+
+    }
+
+    public void update() {
+
+    }
+
+    public void delete() {
+
     }
 }
