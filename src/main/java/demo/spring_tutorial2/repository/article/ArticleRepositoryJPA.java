@@ -1,6 +1,7 @@
 package demo.spring_tutorial2.repository.article;
 
 import demo.spring_tutorial2.domain.Article;
+import demo.spring_tutorial2.domain.ArticleStatus;
 import demo.spring_tutorial2.dto.SearchValue;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Override
     public Page<Article> findBySearchValue(SearchValue search, Pageable pageable) {
 
         String query = "SELECT a FROM Article AS a";
@@ -26,7 +28,6 @@ public class ArticleRepositoryJPA implements ArticleRepository {
         if (!search.isEmpty()) {
             query += searchQueryParser(search);
         }
-
 
         if (pageable.getSort().isSorted()) {
             query += pageQueryParser(query, pageable);
@@ -65,17 +66,38 @@ public class ArticleRepositoryJPA implements ArticleRepository {
         return new PageImpl<>(articles, pageable, articles.size());
     }
 
+    public Optional<Article> findByIdWithComment(Long id) {
+        String query = "SELECT a FROM Article AS a" +
+                " JOIN FETCH a.articleComments AS ac" +
+                " WHERE a.id = :id";
+
+        Article article = entityManager.createQuery(query, Article.class).setParameter("id", id).getSingleResult();
+
+        return Optional.ofNullable(article);
+    }
+
+    @Override
     public Optional<Article> findById(Long id) {
         Article article = entityManager.find(Article.class, id);
         return Optional.ofNullable(article);
     }
 
+    @Override
     public void save(Article article) {
+        article.setStatus(ArticleStatus.PUBLIC);
         entityManager.persist(article);
     }
 
-    public void delete(Article article) {
+    @Override
+    public Article delete(Article article) {
+        article.setStatus(ArticleStatus.DELETE);
+        return article;
+    }
+
+    @Override
+    public Article deleteFromDatabase(Article article) {
         entityManager.remove(article);
+        return article;
     }
 
     private Long getTotalCount(SearchValue search) {

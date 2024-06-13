@@ -11,7 +11,13 @@ public interface ArticleRepository {
 
     public Page<Article> findBySearchValue(SearchValue search, Pageable pageable);
 
+    public Optional<Article> findByIdWithComment(Long id);
+
     public Optional<Article> findById(Long id);
 
     public void save(Article article);
+
+    public Article delete(Article article);
+
+    public Article deleteFromDatabase(Article article);
 }

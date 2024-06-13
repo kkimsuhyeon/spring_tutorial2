@@ -3,11 +3,15 @@ package demo.spring_tutorial2.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@ToString(of = {"title", "content"})
+@ToString
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
@@ -32,13 +36,47 @@ public class Article extends AuditingFields {
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private List<ArticleComment> articleComments = new ArrayList<>();
+
     public Article(String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
+    public Article(String title, String content, String hashtag, List<ArticleComment> comments) {
+        this.title = title;
+        this.content = content;
+        this.hashtag = hashtag;
+        this.articleComments = comments;
+    }
+
     public static Article of(String title, String content, String hashtag) {
         return new Article(title, content, hashtag);
     }
+
+    public static Article of(String title, String content, String hashtag, List<ArticleComment> comments) {
+        return new Article(title, content, hashtag, comments);
+    }
+    
+    public void addComment(ArticleComment comment) {
+        articleComments.add(comment);
+        if (comment.getArticle() == null || !comment.getArticle().equals(this)) {
+            comment.setArticle(this);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Article article)) return false;
+        return Objects.equals(id, article.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
 }

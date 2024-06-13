@@ -3,8 +3,10 @@ package demo.spring_tutorial2.controller.api;
 import demo.spring_tutorial2.dto.SearchValue;
 import demo.spring_tutorial2.dto.domain.ArticleDto;
 import demo.spring_tutorial2.dto.request.RequestArticle;
+import demo.spring_tutorial2.dto.request.RequestArticleComment;
 import demo.spring_tutorial2.dto.response.ResponseArticle;
 import demo.spring_tutorial2.dto.response.ResponseListArticle;
+import demo.spring_tutorial2.service.ArticleCommentService;
 import demo.spring_tutorial2.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import java.util.Map;
 public class ArticleApiController {
 
     private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
 
     @GetMapping
     public ResponseEntity<ResponseListArticle<ArticleDto>> articles(
@@ -37,7 +40,7 @@ public class ArticleApiController {
         searchValue.setTitle(title);
         searchValue.setContent(content);
 
-        Page<ArticleDto> articles = articleService.searchArticle(searchValue, pageable);
+        Page<ArticleDto> articles = articleService.searchArticles(searchValue, pageable);
 
         ResponseListArticle<ArticleDto> result = ResponseListArticle
                 .of(articles.getTotalElements(), articles.getTotalPages(), pageable.getSort(), articles.getContent());
@@ -69,5 +72,9 @@ public class ArticleApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity<?> deleteArticle(@PathVariable Long articleId) {
+        articleService.delete(articleId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
