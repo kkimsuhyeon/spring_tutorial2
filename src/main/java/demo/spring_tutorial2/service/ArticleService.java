@@ -36,15 +36,23 @@ public class ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
     }
 
-    public void save() {
-
+    @Transactional
+    public void save(ArticleDto dto) {
+        articleRepository.save(dto.toEntity());
     }
 
-    public void update() {
+    @Transactional
+    public void update(Long articleId, ArticleDto dto) {
+        Optional<Article> article = articleRepository.findById(articleId);
 
+        article.map((a) -> {
+            a.setTitle(dto.title());
+            a.setContent(dto.content());
+            return a;
+        }).orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
     }
 
-    public void delete() {
+    public void delete(Long articleId) {
 
     }
 }

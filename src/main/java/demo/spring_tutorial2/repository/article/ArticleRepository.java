@@ -12,4 +12,6 @@ public interface ArticleRepository {
     public Page<Article> findBySearchValue(SearchValue search, Pageable pageable);
 
     public Optional<Article> findById(Long id);
+
+    public void save(Article article);
 }

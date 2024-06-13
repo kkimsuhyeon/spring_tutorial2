@@ -71,15 +71,11 @@ public class ArticleRepositoryJPA implements ArticleRepository {
     }
 
     public void save(Article article) {
-
+        entityManager.persist(article);
     }
 
-    public void update() {
-
-    }
-
-    public void delete() {
-
+    public void delete(Article article) {
+        entityManager.remove(article);
     }
 
     private Long getTotalCount(SearchValue search) {
