@@ -11,6 +11,7 @@ import demo.spring_tutorial2.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -34,7 +35,7 @@ public class ArticleApiController {
     public ResponseEntity<ResponseListArticle<ArticleDto>> articles(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String content,
-            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, page = 1, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         SearchValue searchValue = new SearchValue();
         searchValue.setTitle(title);
@@ -77,4 +78,5 @@ public class ArticleApiController {
         articleService.delete(articleId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

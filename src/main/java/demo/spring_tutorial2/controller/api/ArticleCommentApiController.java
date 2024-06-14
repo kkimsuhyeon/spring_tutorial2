@@ -2,6 +2,7 @@ package demo.spring_tutorial2.controller.api;
 
 import demo.spring_tutorial2.dto.request.RequestArticleComment;
 import demo.spring_tutorial2.service.ArticleCommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,5 +31,18 @@ public class ArticleCommentApiController {
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @PutMapping(value = "/{commentId}")
+    public ResponseEntity<?> updateComment(
+            @PathVariable(value = "commentId") Long commentId,
+            @ModelAttribute @Valid RequestArticleComment request) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{commentId}")
+    public ResponseEntity<?> deleteComment() {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

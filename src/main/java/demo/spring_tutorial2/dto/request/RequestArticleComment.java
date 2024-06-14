@@ -1,6 +1,6 @@
 package demo.spring_tutorial2.dto.request;
 
-import demo.spring_tutorial2.domain.Article;
+import demo.spring_tutorial2.domain.CommentStatus;
 import demo.spring_tutorial2.dto.domain.ArticleCommentDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,12 @@ public class RequestArticleComment {
     @NotNull
     private final Long articleId;
 
-    @NotNull
     private final String content;
 
-    public static RequestArticleComment of(Long articleId, String content) {
-        return new RequestArticleComment(articleId, content);
+    private final CommentStatus status;
+
+    public static RequestArticleComment of(Long articleId, String content, CommentStatus status) {
+        return new RequestArticleComment(articleId, content, status);
     }
 
     public ArticleCommentDto toDto() {

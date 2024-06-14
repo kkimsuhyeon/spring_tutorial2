@@ -1,6 +1,5 @@
 package demo.spring_tutorial2.dto.response;
 
-import demo.spring_tutorial2.domain.ArticleComment;
 import demo.spring_tutorial2.dto.domain.ArticleCommentDto;
 import demo.spring_tutorial2.dto.domain.ArticleDto;
 

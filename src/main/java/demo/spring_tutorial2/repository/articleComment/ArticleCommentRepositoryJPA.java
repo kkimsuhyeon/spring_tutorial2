@@ -20,5 +20,8 @@ public class ArticleCommentRepositoryJPA implements ArticleCommentRepository {
         entityManager.persist(comment);
     }
 
+    public void update() {
+    }
+
 
 }

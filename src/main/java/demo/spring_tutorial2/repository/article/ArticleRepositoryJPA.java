@@ -36,7 +36,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
         Long totalCount = getTotalCount(search);
         List<Article> articles = entityManager.createQuery(query, Article.class)
                 .setFirstResult((int) pageable.getOffset())
-                .setMaxResults(pageable.getPageSize() + 1)
+                .setMaxResults(pageable.getPageSize())
                 .getResultList();
 
         return new PageImpl<>(articles, pageable, totalCount);
@@ -68,7 +68,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
 
     public Optional<Article> findByIdWithComment(Long id) {
         String query = "SELECT a FROM Article AS a" +
-                " JOIN FETCH a.articleComments AS ac" +
+                " LEFT JOIN FETCH a.articleComments AS ac" +
                 " WHERE a.id = :id";
 
         Article article = entityManager.createQuery(query, Article.class).setParameter("id", id).getSingleResult();

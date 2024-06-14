@@ -8,11 +8,51 @@
 </head>
 <body>
 <div th:each="item : ${result.data()}">
-    <div class="list-wrapper">
+        <div class="list-wrapper" th:onclick="'javascript:handleItemClick(' +${item.id()}+ ')'">
+<!--    <div class="list-wrapper" th:onclick="'javascript:handleItemClick()'">-->
         <div th:text="${item.title()}"></div>
         <div th:text="${item.content()}"></div>
         <div th:text="${item.hashtag()}"></div>
     </div>
 </div>
+
+<div>
+    <button th:onclick="'javascript:prev()'">prev</button>
+    <button th:onclick="'javascript:next()'">next</button>
+</div>
 </body>
+<script th:inline="javascript">
+
+    function prev() {
+        // const result = [[${result}]];
+        const url = new URL(location.href);
+
+        const origin = url.origin;
+        const pathname = url.pathname
+        const searchParam = url.searchParams;
+
+        searchParam.set("page", `${searchParam.get("page") - 1}`);
+        location.href = `${origin}${pathname}?${searchParam.toString()}`;
+    }
+
+    function next() {
+        const url = new URL(location.href);
+
+        const origin = url.origin;
+        const pathname = url.pathname
+        const searchParam = url.searchParams;
+
+        searchParam.set("page", `${Number(searchParam.get("page")) + 1}`);
+        location.href = `${origin}${pathname}?${searchParam.toString()}`;
+    }
+
+    function handleItemClick(id) {
+        const url = new URL(location.href);
+
+        const origin = url.origin;
+
+        location.href = `${origin}/articles/${id}`
+    }
+
+</script>
 </html>

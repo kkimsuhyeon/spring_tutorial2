@@ -7,6 +7,7 @@ import demo.spring_tutorial2.repository.article.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +27,15 @@ public class ArticleService {
     }
 
     public Page<ArticleDto> searchArticles(SearchValue searchValue, Pageable pageable) {
-        Page<Article> result = articleRepository.findBySearchValue(searchValue, pageable);
-        return result.map(ArticleDto::from);
+        Page<Article> result = articleRepository.findBySearchValue(searchValue, pageableParser(pageable));
+        return result.map(ArticleDto::fromNoComment);
     }
 
     public ArticleDto getArticle(Long id) {
         Optional<Article> article = articleRepository.findByIdWithComment(id);
 
         return article
-                .map(ArticleDto::from)
+                .map(ArticleDto::fromWithComment)
                 .orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
     }
 
@@ -62,5 +63,9 @@ public class ArticleService {
     public void delete(Long articleId) {
         Optional<Article> article = articleRepository.findById(articleId);
         article.map(articleRepository::delete).orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
+    }
+
+    private Pageable pageableParser(Pageable pageable) {
+        return PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
     }
 }

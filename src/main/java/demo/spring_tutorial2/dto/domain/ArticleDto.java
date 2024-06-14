@@ -12,6 +12,10 @@ public record ArticleDto(Long id, String title, String content, String hashtag, 
         return new ArticleDto(id, title, content, hashtag, comments);
     }
 
+    public static ArticleDto of(Long id, String title, String content, String hashtag) {
+        return new ArticleDto(id, title, content, hashtag, new ArrayList<>());
+    }
+
     public static ArticleDto of(String title, String content, String hashtag, List<ArticleCommentDto> comments) {
         return new ArticleDto(null, title, content, hashtag, comments);
     }
@@ -20,7 +24,16 @@ public record ArticleDto(Long id, String title, String content, String hashtag, 
         return new ArticleDto(null, title, content, hashtag, new ArrayList<>());
     }
 
-    public static ArticleDto from(Article entity) {
+    public static ArticleDto fromNoComment(Article entity) {
+        return ArticleDto.of(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getContent(),
+                entity.getHashtag()
+        );
+    }
+
+    public static ArticleDto fromWithComment(Article entity) {
         return ArticleDto.of(
                 entity.getId(),
                 entity.getTitle(),
