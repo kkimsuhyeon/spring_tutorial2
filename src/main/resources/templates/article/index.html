@@ -8,8 +8,7 @@
 </head>
 <body>
 <div th:each="item : ${result.data()}">
-        <div class="list-wrapper" th:onclick="'javascript:handleItemClick(' +${item.id()}+ ')'">
-<!--    <div class="list-wrapper" th:onclick="'javascript:handleItemClick()'">-->
+    <div class="list-wrapper" th:onclick="'javascript:handleItemClick(' +${item.id()}+ ')'">
         <div th:text="${item.title()}"></div>
         <div th:text="${item.content()}"></div>
         <div th:text="${item.hashtag()}"></div>

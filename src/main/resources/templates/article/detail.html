@@ -12,6 +12,10 @@
     <div th:text="${result.title()}"></div>
     <div th:text="${result.content()}"></div>
     <div th:text="${result.hashtag()}">null</div>
+    <div>------------comments---------------</div>
+    <div th:each="item : ${result.comments()}">
+        <div th:text="${item.content()}"></div>
+    </div>
 </div>
 
 </body>

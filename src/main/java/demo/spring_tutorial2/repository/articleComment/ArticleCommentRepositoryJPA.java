@@ -7,11 +7,18 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class ArticleCommentRepositoryJPA implements ArticleCommentRepository {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    public Optional<ArticleComment> findById(Long id) {
+        ArticleComment articleComment = entityManager.find(ArticleComment.class, id);
+        return Optional.ofNullable(articleComment);
+    }
 
     public void save(Article article, ArticleComment comment) {
         comment.setStatus(CommentStatus.PUBLIC);
@@ -20,8 +27,8 @@ public class ArticleCommentRepositoryJPA implements ArticleCommentRepository {
         entityManager.persist(comment);
     }
 
-    public void update() {
+    @Override
+    public void delete(ArticleComment comment) {
+        entityManager.remove(comment);
     }
-
-
 }

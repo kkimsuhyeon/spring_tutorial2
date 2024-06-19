@@ -59,5 +59,10 @@ public class ArticleController {
         return "article/detail";
     }
 
+    @GetMapping("/form")
+    public String createArticle() {
+        return "article/form";
+    }
+
 
 }

@@ -24,7 +24,7 @@ public class ArticleCommentApiController {
     public ResponseEntity<?> addComment(@ModelAttribute RequestArticleComment request) {
         Map<String, String> result = new HashMap<>();
         try {
-            articleCommentService.addComment(request.toDto());
+            articleCommentService.add(request.toDto());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception error) {
             result.put("message", error.getMessage());
@@ -37,12 +37,17 @@ public class ArticleCommentApiController {
             @PathVariable(value = "commentId") Long commentId,
             @ModelAttribute @Valid RequestArticleComment request) {
 
+        Map<String, String> result = new HashMap<>();
+        articleCommentService.update(request.toDtoWithId(commentId));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{commentId}")
-    public ResponseEntity<?> deleteComment() {
-
+    public ResponseEntity<?> deleteComment(
+            @PathVariable(value = "commentId") Long commentId
+    ) {
+        articleCommentService.delete(commentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
