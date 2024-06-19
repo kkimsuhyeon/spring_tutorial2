@@ -1,7 +1,7 @@
 package demo.spring_tutorial2.repository.article;
 
 import demo.spring_tutorial2.domain.Article;
-import demo.spring_tutorial2.domain.ArticleStatus;
+import demo.spring_tutorial2.domain.constant.ArticleStatus;
 import demo.spring_tutorial2.dto.SearchValue;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

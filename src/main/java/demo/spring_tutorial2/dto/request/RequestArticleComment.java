@@ -1,6 +1,6 @@
 package demo.spring_tutorial2.dto.request;
 
-import demo.spring_tutorial2.domain.CommentStatus;
+import demo.spring_tutorial2.domain.constant.CommentStatus;
 import demo.spring_tutorial2.dto.domain.ArticleCommentDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

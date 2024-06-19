@@ -1,5 +1,6 @@
 package demo.spring_tutorial2.domain;
 
+import demo.spring_tutorial2.domain.constant.CommentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

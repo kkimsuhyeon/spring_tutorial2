@@ -2,7 +2,7 @@ package demo.spring_tutorial2.repository.article;
 
 import demo.spring_tutorial2.config.JpaConfig;
 import demo.spring_tutorial2.domain.Article;
-import demo.spring_tutorial2.domain.ArticleStatus;
+import demo.spring_tutorial2.domain.constant.ArticleStatus;
 import demo.spring_tutorial2.dto.request.RequestArticleUpdate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

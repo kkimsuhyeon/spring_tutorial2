@@ -2,7 +2,7 @@ package demo.spring_tutorial2.service;
 
 import demo.spring_tutorial2.domain.Article;
 import demo.spring_tutorial2.domain.ArticleComment;
-import demo.spring_tutorial2.domain.CommentStatus;
+import demo.spring_tutorial2.domain.constant.CommentStatus;
 import demo.spring_tutorial2.dto.domain.ArticleCommentDto;
 import demo.spring_tutorial2.repository.article.ArticleRepository;
 import demo.spring_tutorial2.repository.articleComment.ArticleCommentRepository;

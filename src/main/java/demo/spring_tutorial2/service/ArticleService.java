@@ -60,6 +60,7 @@ public class ArticleService {
         }).orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));
     }
 
+    @Transactional
     public void delete(Long articleId) {
         Optional<Article> article = articleRepository.findById(articleId);
         article.map(articleRepository::delete).orElseThrow(() -> new IllegalArgumentException("해당 id 유저 존재하지 않음"));

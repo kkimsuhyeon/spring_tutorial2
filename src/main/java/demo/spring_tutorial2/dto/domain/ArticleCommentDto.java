@@ -2,7 +2,7 @@ package demo.spring_tutorial2.dto.domain;
 
 import demo.spring_tutorial2.domain.Article;
 import demo.spring_tutorial2.domain.ArticleComment;
-import demo.spring_tutorial2.domain.CommentStatus;
+import demo.spring_tutorial2.domain.constant.CommentStatus;
 
 public record ArticleCommentDto(Long id, Long articleId, String content, CommentStatus status) {
 
