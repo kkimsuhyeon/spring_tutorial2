@@ -1,6 +1,14 @@
+INSERT INTO member (email, password, nickname, memo, created_at)
+VALUES ('test1@test.com', '1234', 'test1', 'I am test.', now()),
+       ('test2@test.com', '1234', 'test2', '!!!!', now()),
+       ('test3@test.com', '1234', 'test3', '????', now()),
+       ('test4@test.com', '1234', 'test4', '@@@@', now()),
+       ('test5@test.com', '1234', 'test5', '####', now())
+;
 
 INSERT INTO article (title, content, hashtag, status, created_by, modified_by, created_at, modified_at)
-VALUES ('title1', 'content1', '#123', 'PRIVATE', 'Kamilah', 'Murial', '2021-05-30 23:53:32', '2021-03-10 08:48:50'),
+VALUES ('title1', 'content1', '#123', 'PRIVATE', 'Kamilah', 'Murial', '2021-05-30 23:53:32',
+        '2021-03-10 08:48:50'),
        ('title2', 'content2', '#234', 'PUBLIC', 'Kamilah', 'Murial', '2021-05-30 23:53:52', '2021-03-10 08:48:50'),
        ('title3', 'content3', '#345', 'PRIVATE', 'Kamilah', 'Murial', '2021-05-30 23:53:51', '2021-03-10 08:48:50'),
        ('title94', 'content4', '#456', 'PUBLIC', 'Kamilah', 'Murial', '2021-05-30 23:53:50', '2021-03-10 08:48:50'),

@@ -1,5 +1,7 @@
 package demo.spring_tutorial2.config;
 
+import demo.spring_tutorial2.repository.article.ArticleRepository;
+import demo.spring_tutorial2.repository.article.ArticleRepositoryJPA;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -17,5 +19,4 @@ public class JpaConfig {
     public AuditorAware<String> auditorAware() {
         return () -> Optional.of("test??");
     }
-
 }

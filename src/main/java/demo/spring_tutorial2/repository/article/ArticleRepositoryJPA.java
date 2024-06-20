@@ -30,7 +30,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
         }
 
         if (pageable.getSort().isSorted()) {
-            query += pageQueryParser(query, pageable);
+            query += pageQueryParser(pageable);
         }
 
         Long totalCount = getTotalCount(search);
@@ -110,7 +110,7 @@ public class ArticleRepositoryJPA implements ArticleRepository {
         return entityManager.createQuery(countQuery, Long.class).getSingleResult();
     }
 
-    private String pageQueryParser(String query, Pageable pageable) {
+    private String pageQueryParser(Pageable pageable) {
 
         String orderQuery = " ORDER BY";
         StringBuilder queryBuilder = new StringBuilder(orderQuery);
