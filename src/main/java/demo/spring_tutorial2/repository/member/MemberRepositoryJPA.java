@@ -60,14 +60,12 @@ public class MemberRepositoryJPA implements MemberRepository {
         return member;
     }
 
-    public Member delete(Member member) {
+    public void delete(Member member) {
         member.setExpiredAt(LocalDateTime.now());
-        return member;
     }
 
-    public Member deleteFromDatabase(Member member) {
+    public void deleteFromDatabase(Member member) {
         entityManager.remove(member);
-        return member;
     }
 
     public void flush() {

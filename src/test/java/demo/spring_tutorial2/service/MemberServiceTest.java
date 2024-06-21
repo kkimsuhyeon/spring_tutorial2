@@ -13,8 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,19 +60,42 @@ public class MemberServiceTest {
     @Test
     @DisplayName("member 생성")
     public void saveTest() {
-
+        MemberDto memberDto = createMemberDto();
+        given(memberRepository.save(any(Member.class))).willReturn(createMember());
+        memberService.save(memberDto);
+        then(memberRepository).should().save(any(Member.class));
     }
 
     @Test
     @DisplayName("member 수정")
     public void updateTest() {
+        // Given
+        Long memberId = 1L;
+        Member member = createMember();
+        MemberDto memberDto = createMemberDto("new email", "new nickname", "new memo");
 
+        given(memberRepository.findById(member.getId())).willReturn(Optional.of(member));
+
+        memberService.update(member.getId(), memberDto);
+
+        Assertions.assertThat(member)
+                .hasFieldOrPropertyWithValue("email", "email") // email은 변경되지 않음
+                .hasFieldOrPropertyWithValue("nickname", "new nickname")
+                .hasFieldOrPropertyWithValue("memo", "new memo");
+        then(memberRepository).should().findById(1L);
     }
 
     @Test
     @DisplayName("member 삭제")
     public void deleteTest() {
+        Member member = createMember();
+        given(memberRepository.findById(anyLong())).willReturn(Optional.of(member));
+        willDoNothing().given(memberRepository).delete(member);
 
+        memberService.delete(member.getId());
+
+        // 여기서 expiredAt에 대한 조건 처리가 필요함
+        then(memberRepository).should().delete(member);
     }
 
     private Member createMember() {
@@ -80,4 +105,11 @@ public class MemberServiceTest {
         return member;
     }
 
+    private MemberDto createMemberDto() {
+        return MemberDto.from(createMember());
+    }
+
+    private MemberDto createMemberDto(String email, String nickname, String memo) {
+        return MemberDto.of(email, "password", nickname, memo);
+    }
 }

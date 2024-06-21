@@ -17,7 +17,7 @@ public interface MemberRepository {
 
     public Member save(Member member);
 
-    public Member delete(Member member);
+    public void delete(Member member);
 
-    public Member deleteFromDatabase(Member member);
+    public void deleteFromDatabase(Member member);
 }

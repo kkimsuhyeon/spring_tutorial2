@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -37,15 +38,25 @@ public class MemberService {
         return member;
     }
 
+    @Transactional
     public void save(MemberDto dto) {
-
+        memberRepository.save(dto.toEntity());
     }
 
-    public void update(MemberDto dto) {
+    @Transactional
+    public void update(Long id, MemberDto dto) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 member 존재하지 않음"));
 
+        member.setNickname(dto.nickname());
+        member.setMemo(dto.memo());
     }
 
+    @Transactional
     public void delete(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 member는 존재하지 않음"));
 
+        memberRepository.delete(member);
     }
 }
