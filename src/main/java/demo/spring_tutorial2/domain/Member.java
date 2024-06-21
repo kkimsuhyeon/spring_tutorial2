@@ -45,6 +45,7 @@ public class Member {
     @Column(nullable = true)
     private LocalDateTime expiredAt;
 
+    @Builder
     public Member(String email, String password, String nickname, String memo) {
         this.email = email;
         this.password = password;

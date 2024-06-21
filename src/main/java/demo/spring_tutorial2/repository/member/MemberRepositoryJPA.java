@@ -55,16 +55,19 @@ public class MemberRepositoryJPA implements MemberRepository {
         return Optional.ofNullable(member);
     }
 
-    public void save(Member member) {
+    public Member save(Member member) {
         entityManager.persist(member);
+        return member;
     }
 
-    public void delete(Member member) {
+    public Member delete(Member member) {
         member.setExpiredAt(LocalDateTime.now());
+        return member;
     }
 
-    public void deleteFromDatabase(Member member) {
+    public Member deleteFromDatabase(Member member) {
         entityManager.remove(member);
+        return member;
     }
 
     public void flush() {

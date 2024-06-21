@@ -15,9 +15,9 @@ public interface MemberRepository {
 
     public Optional<Member> findByEmail(String email);
 
-    public void save(Member member);
+    public Member save(Member member);
 
-    public void delete(Member member);
+    public Member delete(Member member);
 
-    public void deleteFromDatabase(Member member);
+    public Member deleteFromDatabase(Member member);
 }

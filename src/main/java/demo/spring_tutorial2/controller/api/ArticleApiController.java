@@ -3,15 +3,13 @@ package demo.spring_tutorial2.controller.api;
 import demo.spring_tutorial2.dto.SearchValue;
 import demo.spring_tutorial2.dto.domain.ArticleDto;
 import demo.spring_tutorial2.dto.request.RequestArticle;
-import demo.spring_tutorial2.dto.request.RequestArticleComment;
 import demo.spring_tutorial2.dto.response.ResponseArticle;
-import demo.spring_tutorial2.dto.response.ResponseListArticle;
+import demo.spring_tutorial2.dto.response.ResponseList;
 import demo.spring_tutorial2.service.ArticleCommentService;
 import demo.spring_tutorial2.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -32,7 +30,7 @@ public class ArticleApiController {
     private final ArticleCommentService articleCommentService;
 
     @GetMapping
-    public ResponseEntity<ResponseListArticle<ArticleDto>> articles(
+    public ResponseEntity<ResponseList<ArticleDto>> articles(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String content,
             @PageableDefault(size = 10, page = 1, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
@@ -43,7 +41,7 @@ public class ArticleApiController {
 
         Page<ArticleDto> articles = articleService.searchArticles(searchValue, pageable);
 
-        ResponseListArticle<ArticleDto> result = ResponseListArticle
+        ResponseList<ArticleDto> result = ResponseList
                 .of(articles.getTotalElements(), articles.getTotalPages(), pageable.getSort(), articles.getContent());
 
         return new ResponseEntity<>(result, HttpStatus.OK);

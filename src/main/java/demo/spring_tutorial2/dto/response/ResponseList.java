@@ -4,14 +4,15 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public record ResponseListArticle<T>(
+public record ResponseList<T>(
         Long totalCount,
         int totalPage,
         String sortKey,
         Sort.Direction direction,
         List<T> data
 ) {
-    public static <T> ResponseListArticle<T> of(Long totalCount, int totalPage, Sort sort, List<T> data) {
+
+    public static <T> ResponseList<T> of(Long totalCount, int totalPage, Sort sort, List<T> data) {
         String sortKey = "";
         Sort.Direction direction = null;
 
@@ -22,6 +23,6 @@ public record ResponseListArticle<T>(
             }
         }
 
-        return new ResponseListArticle<>(totalCount, totalPage, sortKey, direction, data);
+        return new ResponseList<>(totalCount, totalPage, sortKey, direction, data);
     }
 }

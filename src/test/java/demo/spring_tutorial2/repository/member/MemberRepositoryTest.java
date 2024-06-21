@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,6 +47,19 @@ public class MemberRepositoryTest {
     }
 
     @Test
+    @DisplayName("search 값을 통해서 가져오기")
+    public void searchTest() {
+        Page<Member> resultByTest1 = memberRepository.findBySearchType(MemberSearchType.EMAIL, "test1", PageRequest.of(0, 100));
+        Page<Member> resultByTest = memberRepository.findBySearchType(MemberSearchType.EMAIL, "test", PageRequest.of(0, 100));
+
+        List<Member> membersByTest1 = resultByTest1.getContent();
+        List<Member> membersByTest = resultByTest.getContent();
+
+        Assertions.assertThat(membersByTest1).hasSize(1).first().hasFieldOrPropertyWithValue("email", "test1@test.com");
+        Assertions.assertThat(membersByTest).hasSize(5);
+    }
+
+    @Test
     @DisplayName("ID로 값 가져오기")
     public void findByIdTest() {
         Optional<Member> member = memberRepository.findById(1L);
@@ -56,7 +69,7 @@ public class MemberRepositoryTest {
     @Test
     @DisplayName("email로 값 가져오기")
     public void findByEmailTest() {
-        String email = "test11@test.com";
+        String email = "test1@test.com";
         Optional<Member> member = memberRepository.findByEmail(email);
         Assertions.assertThat(member).isNotNull().get().hasFieldOrPropertyWithValue("email", email);
     }
@@ -120,8 +133,8 @@ public class MemberRepositoryTest {
         memberRepository.deleteFromDatabase(member.get());
         ((MemberRepositoryJPA) memberRepository).flush();
 
-        assertThrows(NoResultException.class, () -> {
-            memberRepository.findById(memberId);
+        assertThrows(NoSuchElementException.class, () -> {
+            memberRepository.findById(memberId).get();
         });
     }
 }
