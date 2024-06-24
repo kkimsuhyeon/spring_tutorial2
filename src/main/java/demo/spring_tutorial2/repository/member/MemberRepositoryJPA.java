@@ -5,6 +5,7 @@ import demo.spring_tutorial2.domain.constant.MemberSearchType;
 import demo.spring_tutorial2.dto.SearchValue;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,7 @@ public class MemberRepositoryJPA implements MemberRepository {
         }
 
         Long totalCount = getTotalCount(type, searchValue);
+
         List<Member> members = entityManager.createQuery(query, Member.class)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())

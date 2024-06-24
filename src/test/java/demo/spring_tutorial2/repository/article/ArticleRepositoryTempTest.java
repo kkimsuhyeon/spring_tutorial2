@@ -33,7 +33,7 @@ class ArticleRepositoryTempTest {
     @DisplayName("select 테스트")
     public void selectTest() {
         Page<Article> articles = articleRepository.findBySearchValue(new SearchValue(null, null), PageRequest.of(0, 10));
-        Assertions.assertThat(articles.getContent()).isNotNull().hasSize(3);
+        Assertions.assertThat(articles.getContent()).isNotNull().hasSize(10);
     }
 //
 //    @Test

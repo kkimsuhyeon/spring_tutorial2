@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/*").authenticated()
+//                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(manager -> manager.accessDeniedHandler(new JwtAccessDeniedHandler()))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

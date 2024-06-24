@@ -90,12 +90,10 @@ public class MemberServiceTest {
     public void deleteTest() {
         Member member = createMember();
         given(memberRepository.findById(anyLong())).willReturn(Optional.of(member));
-        willDoNothing().given(memberRepository).delete(member);
 
         memberService.delete(member.getId());
 
-        // 여기서 expiredAt에 대한 조건 처리가 필요함
-        then(memberRepository).should().delete(member);
+        Assertions.assertThat(member.getExpiredAt()).isNotNull();
     }
 
     private Member createMember() {
@@ -106,7 +104,7 @@ public class MemberServiceTest {
     }
 
     private MemberDto createMemberDto() {
-        return MemberDto.from(createMember());
+        return MemberDto.fromEntity(createMember());
     }
 
     private MemberDto createMemberDto(String email, String nickname, String memo) {

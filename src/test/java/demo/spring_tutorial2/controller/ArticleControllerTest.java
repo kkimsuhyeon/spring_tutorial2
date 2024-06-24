@@ -33,6 +33,4 @@ class ArticleControllerTest {
     public void getFindAll() throws Exception {
         mvc.perform(get("/api/articles")).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
-
-
 }

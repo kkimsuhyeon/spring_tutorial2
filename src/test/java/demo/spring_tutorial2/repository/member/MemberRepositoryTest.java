@@ -43,6 +43,7 @@ public class MemberRepositoryTest {
                         PageRequest.of(0, 100, Sort.by(Sort.Direction.ASC, "nickname")));
 
         List<Member> members = result.getContent();
+        System.out.println(members);
         Assertions.assertThat(members).hasSize(5).first().hasFieldOrPropertyWithValue("email", "test1@test.com");
     }
 
