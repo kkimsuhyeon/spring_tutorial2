@@ -1,6 +1,5 @@
 package demo.spring_tutorial2.domain;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +36,9 @@ public class Member {
     private String nickname;
 
     private String memo;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<MemberRole> roles = new HashSet<>();
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate

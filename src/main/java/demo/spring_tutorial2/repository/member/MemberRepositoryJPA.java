@@ -57,6 +57,19 @@ public class MemberRepositoryJPA implements MemberRepository {
         return Optional.ofNullable(member);
     }
 
+    public Optional<Member> findByEmailWithRoles(String email) {
+        String query = "SELECT m FROM Member AS m" +
+                " LEFT JOIN FETCH m.roles AS r" +
+                " WHERE m.email = :email";
+
+        Member member = entityManager
+                .createQuery(query, Member.class)
+                .setParameter("email", email)
+                .getSingleResult();
+
+        return Optional.ofNullable(member);
+    }
+
     public Member save(Member member) {
         entityManager.persist(member);
         return member;

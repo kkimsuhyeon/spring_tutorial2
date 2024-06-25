@@ -1,4 +1,4 @@
-package demo.spring_tutorial2.config.jwt;
+package demo.spring_tutorial2.security.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

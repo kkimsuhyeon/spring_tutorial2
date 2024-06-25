@@ -6,6 +6,13 @@ VALUES ('test1@test.com', '1234', 'test1', 'I am test.', now()),
        ('test5@test.com', '1234', 'test5', '####', now())
 ;
 
+INSERT INTO member_role (member_id, role)
+VALUES (1, 'MANAGER'),
+       (1, 'USER'),
+       (2, 'MANAGER'),
+       (3, 'USER')
+;
+
 INSERT INTO article (title, content, hashtag, status, created_by, modified_by, created_at, modified_at)
 VALUES ('title1', 'content1', '#123', 'PRIVATE', 'Kamilah', 'Murial', '2021-05-30 23:53:32',
         '2021-03-10 08:48:50'),
