@@ -1,6 +1,7 @@
 package demo.spring_tutorial2.service;
 
 import demo.spring_tutorial2.domain.Member;
+import demo.spring_tutorial2.domain.MemberRole;
 import demo.spring_tutorial2.dto.domain.MemberDto;
 import demo.spring_tutorial2.repository.member.MemberRepository;
 import org.assertj.core.api.Assertions;
@@ -17,8 +18,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.BDDMockito.*;
 
@@ -72,7 +75,7 @@ public class MemberServiceTest {
         // Given
         Long memberId = 1L;
         Member member = createMember();
-        MemberDto memberDto = createMemberDto("new email", "new nickname", "new memo");
+        MemberDto memberDto = createMemberDto("new email", "new nickname", "new memo", new HashSet<>());
 
         given(memberRepository.findById(member.getId())).willReturn(Optional.of(member));
 
@@ -107,7 +110,7 @@ public class MemberServiceTest {
         return MemberDto.fromEntity(createMember());
     }
 
-    private MemberDto createMemberDto(String email, String nickname, String memo) {
-        return MemberDto.of(email, "password", nickname, memo);
+    private MemberDto createMemberDto(String email, String nickname, String memo, Set<MemberRole> roles) {
+        return MemberDto.of(email, "password", nickname, memo, roles);
     }
 }

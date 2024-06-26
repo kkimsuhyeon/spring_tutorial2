@@ -1,4 +1,4 @@
-package demo.spring_tutorial2.dto.request;
+package demo.spring_tutorial2.dto.request.article;
 
 import demo.spring_tutorial2.dto.domain.ArticleDto;
 import jakarta.annotation.Nullable;
@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-public class RequestArticle {
+public class RequestCreateArticle extends RequestArticle {
 
     @NotNull
     private final String title;
@@ -20,17 +22,10 @@ public class RequestArticle {
     private final String content;
 
     @Nullable
-    private String hashtag;
+    private final String hashtag;
 
-    public static RequestArticle of(String title, String content, String hashtag) {
-        return new RequestArticle(title, content, hashtag);
-    }
-
-    public static RequestArticle of(String title, String content) {
-        return new RequestArticle(title, content);
-    }
-
+    @Override
     public ArticleDto toDto() {
-        return ArticleDto.of(title, content, hashtag);
+        return new ArticleDto(null, title, content, hashtag, null, new ArrayList<>());
     }
 }

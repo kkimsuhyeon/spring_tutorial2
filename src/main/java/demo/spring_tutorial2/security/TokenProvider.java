@@ -18,7 +18,7 @@ public class TokenProvider {
 
     private static final SecretKey key = Jwts.SIG.HS512.key().build();
 
-    public static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 1; // ACCESS 토근 만료 시간: 1시간
+    public static final Long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 100000; // ACCESS 토근 만료 시간: 1시간
     public static final Long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 6; // Refresh 토큰 만료 시간 : 6시간
 
     private final CustomUserDetailsService userDetailsService;

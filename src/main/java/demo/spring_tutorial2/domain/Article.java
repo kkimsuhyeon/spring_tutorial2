@@ -40,6 +40,10 @@ public class Article extends AuditingFields {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<ArticleComment> articleComments = new ArrayList<>();
 
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     public Article(String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
@@ -60,11 +64,18 @@ public class Article extends AuditingFields {
     public static Article of(String title, String content, String hashtag, List<ArticleComment> comments) {
         return new Article(title, content, hashtag, comments);
     }
-    
+
     public void addComment(ArticleComment comment) {
         articleComments.add(comment);
         if (comment.getArticle() == null || !comment.getArticle().equals(this)) {
             comment.setArticle(this);
+        }
+    }
+
+    public void assignMember(Member member) {
+        this.member = member;
+        if (!member.getArticles().contains(this)) {
+            member.addArticle(this);
         }
     }
 

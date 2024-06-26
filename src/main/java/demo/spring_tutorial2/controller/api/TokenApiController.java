@@ -63,6 +63,8 @@ public class TokenApiController {
     @GetMapping(value = "/check-token")
     public ResponseEntity<?> checkToken(Principal principal) {
 
+        principal.getName();
+
         return new ResponseEntity<>(principal, HttpStatus.OK);
     }
 

@@ -3,7 +3,9 @@ package demo.spring_tutorial2.repository.member;
 import demo.spring_tutorial2.config.JpaConfig;
 import demo.spring_tutorial2.config.RepositoryConfig;
 import demo.spring_tutorial2.domain.Member;
+import demo.spring_tutorial2.domain.MemberRole;
 import demo.spring_tutorial2.domain.constant.MemberSearchType;
+import demo.spring_tutorial2.domain.constant.Role;
 import jakarta.persistence.NoResultException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,9 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,8 +44,20 @@ public class MemberRepositoryTest {
                         PageRequest.of(0, 100, Sort.by(Sort.Direction.ASC, "nickname")));
 
         List<Member> members = result.getContent();
-        System.out.println(members);
         Assertions.assertThat(members).hasSize(5).first().hasFieldOrPropertyWithValue("email", "test1@test.com");
+    }
+
+    @Test
+    @DisplayName("전체 role이랑 같이 가져오기")
+    public void findAllWithRolesTest() {
+        Page<Member> result = memberRepository.findBySearchTypeWithRoles(
+                null, "",
+                PageRequest.of(0, 100, Sort.by(Sort.Direction.ASC, "nickname")));
+
+        List<Member> members = result.getContent();
+        System.out.println(members);
+        Assertions.assertThat(members).hasSize(5);
+
     }
 
     @Test
@@ -73,6 +86,19 @@ public class MemberRepositoryTest {
         String email = "test1@test.com";
         Optional<Member> member = memberRepository.findByEmail(email);
         Assertions.assertThat(member).isNotNull().get().hasFieldOrPropertyWithValue("email", email);
+    }
+
+    @Test
+    @DisplayName("email로 role과 함께 가져오기")
+    public void findByEmailWithRoleTest() {
+        String email = "test1@test.com";
+        Optional<Member> member = memberRepository.findByEmailWithRoles(email);
+
+        Assertions.assertThat(member).isNotNull().get()
+                .hasFieldOrPropertyWithValue("email", email);
+
+        Assertions.assertThat(member.get().getRoles().stream().map(MemberRole::getRole).collect(Collectors.toSet()))
+                .isEqualTo(new HashSet<>(Arrays.asList(Role.MANAGER, Role.USER)));
     }
 
     @Test

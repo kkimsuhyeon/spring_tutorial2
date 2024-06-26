@@ -2,7 +2,7 @@ package demo.spring_tutorial2.controller.api;
 
 import demo.spring_tutorial2.dto.SearchValue;
 import demo.spring_tutorial2.dto.domain.ArticleDto;
-import demo.spring_tutorial2.dto.request.RequestArticle;
+import demo.spring_tutorial2.dto.request.article.RequestCreateArticle;
 import demo.spring_tutorial2.dto.response.ResponseArticle;
 import demo.spring_tutorial2.dto.response.ResponseList;
 import demo.spring_tutorial2.service.ArticleCommentService;
@@ -16,8 +16,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,13 +62,13 @@ public class ArticleApiController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<?> saveArticle(@ModelAttribute @Valid RequestArticle request) {
+    public ResponseEntity<?> saveArticle(@ModelAttribute @Valid RequestCreateArticle request, @AuthenticationPrincipal Principal principal) {
         articleService.save(request.toDto());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{articleId}")
-    public ResponseEntity<?> updateArticle(@PathVariable Long articleId, @ModelAttribute @Valid RequestArticle request) {
+    public ResponseEntity<?> updateArticle(@PathVariable Long articleId, @ModelAttribute @Valid RequestCreateArticle request) {
         articleService.update(articleId, request.toDto());
         return new ResponseEntity<>(HttpStatus.OK);
     }

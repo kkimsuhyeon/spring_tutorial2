@@ -42,6 +42,28 @@ public class MemberRepositoryJPA implements MemberRepository {
         return new PageImpl<>(members, pageable, totalCount);
     }
 
+    public Page<Member> findBySearchTypeWithRoles(MemberSearchType type, String searchValue, Pageable pageable) {
+        String query = "SELECT m FROM Member AS m" +
+                " LEFT JOIN FETCH m.roles AS r";
+        
+        if (searchValue != null && !searchValue.isBlank()) {
+            query += searchQueryParser(type, searchValue);
+        }
+
+        if (pageable.getSort().isSorted()) {
+            query += pageQueryParser(pageable);
+        }
+
+        Long totalCount = getTotalCount(type, searchValue);
+
+        List<Member> members = entityManager.createQuery(query, Member.class)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        return new PageImpl<>(members, pageable, totalCount);
+    }
+
     public Optional<Member> findById(Long id) {
         Member member = entityManager.find(Member.class, id);
         return Optional.ofNullable(member);

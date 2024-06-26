@@ -11,6 +11,8 @@ public interface MemberRepository {
 
     public Page<Member> findBySearchType(MemberSearchType type, String searchValue, Pageable pageable);
 
+    public Page<Member> findBySearchTypeWithRoles(MemberSearchType type, String searchValue, Pageable pageable);
+
     public Optional<Member> findById(Long id);
 
     public Optional<Member> findByEmail(String email);
